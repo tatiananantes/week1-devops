@@ -28,11 +28,13 @@ jobs:
       - name: Run tests
         run: |
           python -m pytest --cov=. --cov-report=xml --junit-xml=./pytest-results.xml tests
+          python -m pytest --cov=. --cov-report=term-missing:skip-covered --cov-report=xml --junit-xml=./pytest.xml tests | tee pytest-coverage.txt
+
 
       - name: Pytest Coverage Comment
         uses: MishaKav/pytest-coverage-comment@v1.1.47
         with:
-          pytest-coverage-path: ./coverage.xml
+          pytest-coverage-path: ./pytest-coverage.txt
           junitxml-path: ./pytest-results.xml
           title: My Coverage Report Title
           badge-title: My Badge Coverage Title
